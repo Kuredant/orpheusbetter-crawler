@@ -4,7 +4,6 @@
 import os
 import json
 import argparse
-import ConfigParser
 import sys
 
 lockfile = os.path.expanduser('~/.orpheusbetter/parse.lock')

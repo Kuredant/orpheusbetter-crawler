@@ -87,17 +87,17 @@ class WhatAPI:
     def _login(self):
         '''Logs in user and gets authkey from server'''
         loginpage = '{0}/login.php'.format(self.endpoint)
-        data = {'username': self.username,
-                'password': self.password}
-        r = self.session.post(loginpage, data=data)
+        params = {'act': 'twofa'}
+        data = {
+            'username': self.username,
+            'password': self.password,
+            'twofa': 0
+        }
+        if self.totp:
+            data['twofa'] = self.totp
+        r = self.session.post(loginpage, params=params, data=data)
         if r.status_code != 200:
             raise LoginException
-        if self.totp:
-            params = {'act': '2fa'}
-            data = {'2fa': self.totp}
-            r = self.session.post(loginpage, params=params, data=data)
-            if r.status_code != 200:
-                raise LoginException
         accountinfo = self.request('index')
         self.authkey = accountinfo['authkey']
         self.passkey = accountinfo['passkey']
