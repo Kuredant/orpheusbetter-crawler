@@ -31,7 +31,7 @@ def create_description(torrent, flac_dir, format, permalink):
             'input.flac', 'output' + transcode.encoders[format]['ext'])
 
     description = [
-        'Transcode of [url={0}]{0}[/url]'.format(permalink),
+        f'Transcode of [url]{permalink}[/url]',
         '',
         'Transcode process:',
         '',
